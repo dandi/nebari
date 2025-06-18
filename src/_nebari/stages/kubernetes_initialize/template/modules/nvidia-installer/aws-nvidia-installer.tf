@@ -1,7 +1,7 @@
 resource "kubernetes_daemonset" "aws_nvidia_installer" {
   count = var.gpu_enabled && (var.cloud_provider == "aws") ? 1 : 0
   metadata {
-    name      = "nvidia-device-plugin-daemonset-1.12"
+    name      = "nvidia-device-plugin-daemonset"
     namespace = "kube-system"
   }
 
@@ -44,7 +44,7 @@ resource "kubernetes_daemonset" "aws_nvidia_installer" {
 
         container {
           name  = "nvidia-device-plugin-ctr"
-          image = "nvidia/k8s-device-plugin:1.11"
+          image = "nvcr.io/nvidia/k8s-device-plugin:v0.17.2"
 
           volume_mount {
             name       = "device-plugin"
